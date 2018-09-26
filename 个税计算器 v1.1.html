@@ -1,0 +1,119 @@
+<style type="text/css">
+h1 {
+	text-align: center;
+}
+
+p {
+	text-align: center;
+}
+
+table {
+	border: 2px solid silver;
+	font-size: 16px;
+}
+
+td {
+	border: 1px dashed silver;
+	height: 30px;
+	padding: 5px 9px;
+	text-align: center;
+	vertical-align: middle;
+}
+
+td.shen {
+	background-color: #B8CCE4;
+	border: 1px solid #B8CCE4;
+}
+
+td.qian {
+	background-color: #DCE6F1;
+	border: 1px solid #DCE6F1;
+}
+
+td input.text {
+	text-align: center;
+	width: 180px;
+}
+</style>
+
+<html>
+	<head>
+		<meta name="author" charset="utf-8" content="mayer@2018.9.9">
+		<title>个税计算器 v1.1</title>
+	</head>
+	<body>
+		<h1>工薪税费计算器</h1>
+		<table align="center" cellpadding="0">
+			<tr>
+				<td class="shen">税前收入</td>
+				<td><input class="text" id="shuiqianshouru" onchange="jisuan()" type="text" value="4280"/></td>
+				<td class="shen">工资基数</td>
+				<td><input class="text" id="gongzijishu" onchange="jisuan()" type="text" value="3500"/></td>
+			</tr>
+			<tr>
+				<td class="qian">医疗保险</td>
+				<td id="yiliaobaoxian">0.00</td>
+				<td class="qian">住房公积金</td>
+				<td id="zhufanggongjijin">0.00</td>
+			</tr>
+			<tr>
+				<td class="shen">养老保险</td>
+				<td id="yanglaobaoxian">0.00</td>
+				<td class="shen">失业保险</td>
+				<td id="shiyebaoxian">0.00</td>
+			</tr>
+			<tr>
+				<td class="qian">税后应得</td>
+				<td id="shuihouyingde">0.00</td>
+				<td class="qian">个人所得税</td>
+				<td id="gerensuodeshui">0.00</td>
+			</tr>
+		</table>
+		<p></p>
+	</body>
+</html>
+
+<script type="text/javascript">
+var geshuimianzhenge = 3500, jisuan = window.onload = function() {
+	yssr = jsYingshuishouru();
+
+	switch(true) {
+		case yssr > 0 && yssr <= 1500:
+			grsds = yssr * 0.03;
+		break;
+		case yssr > 1500 && yssr <= 4500:
+			grsds = yssr * 0.1 - 105;
+		break;
+		case yssr > 4500 && yssr <= 9000:
+			grsds = yssr * 0.2 - 555;
+		break;
+		case yssr > 9000 && yssr <= 35000:
+			grsds = yssr * 0.25 - 1005;
+		break;
+		case yssr > 35000 && yssr <= 55000:
+			grsds = yssr * 0.3 - 2755;
+		break;
+		case yssr > 55000 && yssr <= 80000:
+			grsds = yssr * 0.35 - 5505;
+		break;
+		case yssr > 80000:
+			grsds = yssr * 0.45 - 13505;
+		break;
+		default:
+			grsds = 0;
+		break;
+	}
+
+	gerensuodeshui.innerText = grsds.toFixed(2);
+	shuihouyingde.innerText = (yssr + geshuimianzhenge - grsds).toFixed(2);
+}
+
+function jsYingshuishouru() {
+	sxyj = Number(zhufanggongjijin.innerText = (gongzijishu.value * 0.12).toFixed(2));
+	sxyj += Number(yiliaobaoxian.innerText = (gongzijishu.value * 0.02 + 3).toFixed(2));
+	sxyj += Number(yanglaobaoxian.innerText = (gongzijishu.value * 0.08).toFixed(2));
+	sxyj += Number(shiyebaoxian.innerText = (gongzijishu.value * 0.002).toFixed(2));
+
+	return shuiqianshouru.value - geshuimianzhenge - sxyj;
+}
+</script>
