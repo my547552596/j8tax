@@ -13,7 +13,7 @@ BOOL appin::InitInstance() {
 BOOL appin::ExitInstance() {
 	delete m_pMainWnd;
 
-	m_pMainWnd = new Atwo();
+	m_pMainWnd = new xSeal();
 	m_pMainWnd->ShowWindow(SW_SHOW);
 	m_pMainWnd->UpdateWindow();
 

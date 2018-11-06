@@ -1,4 +1,5 @@
-#include "Atwo.h"
+#include "../bo/xSeal_cpp.h"
+
 #define IDR_MAINFRAME 128
 
 class appin : public CWinApp {
